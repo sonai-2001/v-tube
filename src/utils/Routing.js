@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import VideoCardContainer from "../components/VideoCardContainer.jsx"
 import App from "../App.js";
+import Watch from "../components/Watch.jsx";
 const router=createBrowserRouter([
     {
         path:"/",
@@ -9,6 +10,10 @@ const router=createBrowserRouter([
             {
                 path:"/",
                 element:<VideoCardContainer/>
+            },
+            {
+                path:"/watch",
+                element:<Watch/>
             }
         ]
     }

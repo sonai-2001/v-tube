@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Vcard from "./Vcard";
 import useVideos from "../hooks/useVideos";
 import { VIDEO_API } from "../utils/api";
+import { Link } from "react-router-dom";
 //o
 const VideoCardContainer = () => {
   const menu = useSelector((store) => store.toggle.isMenuOpen);
@@ -22,7 +23,7 @@ const VideoCardContainer = () => {
         containerRef.current.scrollTop = 0; // Reset scroll position to top
       }
     }
-  }, [ data.items]);
+  }, [data.items]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -30,7 +31,8 @@ const VideoCardContainer = () => {
     const handleScroll = () => {
       if (
         container &&
-        container.scrollTop + container.clientHeight >= container.scrollHeight - 50 // Adjust this threshold as needed
+        container.scrollTop + container.clientHeight >=
+          container.scrollHeight - 50 // Adjust this threshold as needed
       ) {
         console.log("Reached bottom, load more data...");
         fetchMoreVideos();
@@ -79,7 +81,9 @@ const VideoCardContainer = () => {
       } h-[90vh] overflow-y-auto flex justify-center gap-3 flex-wrap p-3`}
     >
       {videos.map((v) => (
-        <Vcard details={v} key={v.id} />
+        <Link to={`/watch?v=${v.id}`} key={v.id}>
+          <Vcard details={v} />
+        </Link>
       ))}
     </div>
   );

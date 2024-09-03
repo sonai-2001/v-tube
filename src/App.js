@@ -8,7 +8,7 @@ import store from '../src/utils/store';
 function App() {
 //p
   return (
-    <div className='h-screen'>
+    <div className='h-screen overflow-hidden'>
        < Provider store={store}>
         <NavBar/>
        <div className='flex   '>
