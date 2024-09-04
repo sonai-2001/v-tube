@@ -37,8 +37,8 @@ const PlayVideo = ({ detail }) => {
   allowFullScreen
 ></iframe>
 {/* detail section */}
-<div>
-    <h1 className="font-bold">
+<div className="mt-3">
+    <h1 className="font-bold text-xl">
       {title}
     </h1>
     <div className="flex mt-3 justify-between items-center">

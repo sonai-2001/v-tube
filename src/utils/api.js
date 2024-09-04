@@ -16,4 +16,7 @@ export const comment_api =
   "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&maxResults=30&key=" +
   API_KEY +
   "&videoId=";
-export const replies_api ="https://www.googleapis.com/youtube/v3/comments?part=snippet&maxResults=50&key="+API_KEY+"&parentId="
+export const replies_api =
+  "https://www.googleapis.com/youtube/v3/comments?part=snippet&maxResults=50&key=" +
+  API_KEY +
+  "&parentId=";

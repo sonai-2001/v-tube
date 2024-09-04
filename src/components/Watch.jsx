@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setComments } from "../utils/commentsSlice";
 import { setPageToken } from "../utils/commentTokenSlice";
 import { comment_api } from "../utils/api";
+import Comment from "./Comment";
 
 
 const Watch = () => {
@@ -32,6 +33,7 @@ const Watch = () => {
   // comment initial detail handle
   useEffect(()=>{
      if(commentsData){
+            console.log('comments data',commentsData.items)
             dispatch(setComments(commentsData.items));
             dispatch(setPageToken(commentsData.nextPageToken));
    
@@ -42,6 +44,8 @@ const Watch = () => {
   useEffect(()=>{
     console.log("scroll effect called")
        const container=reference.current
+
+       //scroll handler
        const handleScroll=()=>{
         console.log("handleScrollded called")
         console.log("container.scrollTop",container.scrollTop)
@@ -73,6 +77,7 @@ const Watch = () => {
     const api=comment_api+videoId+pageToken;
     const raw=await fetch(api);
     const data=await raw.json();
+    
     dispatch(setComments([...comments,...data.items]));
     dispatch(setPageToken(data.nextPageToken));
     setLoad(false)
@@ -97,9 +102,7 @@ const Watch = () => {
             {
              comments && comments.map((c,i)=>{
                     return(
-                      <div>
-                        comment{i}
-                        </div>
+                     <Comment key={c.id} detail={c.snippet.topLevelComment.snippet} commentId={c.id}/>
                     )
               })
             }
