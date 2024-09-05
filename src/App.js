@@ -11,7 +11,7 @@ function App() {
     <div className='h-screen overflow-hidden'>
        < Provider store={store}>
         <NavBar/>
-       <div className='flex   '>
+       <div className='flex'>
         <SideBar/>
         <Outlet />
        </div>

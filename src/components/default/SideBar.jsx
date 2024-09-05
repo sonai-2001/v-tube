@@ -1,10 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategory } from "../../utils/categorySlice";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { sideBarClose } from "../../utils/toggleSlice";
 
 const SideBar = () => {
   const demo = useSelector((store) => store.toggle.isMenuOpen);
+  const d=useLocation()
+  const {pathname}=d
+  console.log(d)
 
   const dispatch = useDispatch();
   console.log(demo);
@@ -17,6 +21,7 @@ const SideBar = () => {
     console.log(cid);
     console.log("clicked");
     dispatch(setCategory(cid));
+    dispatch(sideBarClose(false))
   };
 
   const categories = [
@@ -38,17 +43,19 @@ const SideBar = () => {
   //opm
   if (!menu) {
     return (
-      <div className=" bg-white h-[90vh] w-[16vw] md:w-[5vw] shadow-2xl pt-1  md:py-2 pl-2 md:px-1 border-r md:border-r-0 border-slate-300 flex flex-col gap-5 md:gap-0">
+      <div className={ `bg-white h-[90vh] w-[16vw] md:w-[5vw] shadow-2xl pt-1  md:py-2 pl-2 md:px-1 border-r md:border-r-0 hidden md: ${pathname.includes("watch")?"hidden":""} border-slate-300 md:flex flex-col gap-5 md:gap-0`}>
         {categories.map((c, i) => {
           return (
+            <Link  key={i} to="/">
             <div
               onClick={() => handleClick(c.categoryId)}
-              key={i}
+             
               className="w-full h-[5vh] md:h-[7vh] rounded-md hover:bg-slate-200  md:mb-2 flex   flex-col   items-center  pb-1 cursor-pointer "
             >
               <i class={`${c.icon} text-sm md:text-xl`}></i>
               <h3 className=" text-xs  font-thin text-center">{c.name}</h3>
             </div>
+            </Link>
           );
         })}
       </div>
@@ -57,19 +64,19 @@ const SideBar = () => {
   }
 
   return (
-    <div className=" bg-white h-[90vh] w-[28vw] md:w-[15vw] shadow-2xl pt-1 md:py-2 px-1 absolute z-10 md:static">
+    <div className={ `bg-white h-[90vh] w-[28vw] md:w-[15vw] shadow-2xl pt-1 md:py-2 px-1 absolute z-10 md:${pathname.includes("watch")?"absolute":"static"}`}>
       {categories.map((c, i) => {
         return (
-         <Link to="/">
-           <div
-            onClick={() => handleClick(c.categoryId)}
-            key={i}
-            className="w-full h-[5vh] md:h-[7vh] rounded-md hover:bg-slate-200 my-2 flex gap-1 md:gap-4 items-center pl-2"
-          >
-            <i class={`${c.icon} text-sm md:text-xl`}></i>
-            <h3 className=" text-xs md:text-lg font-thin">{c.name}</h3>
-          </div>
-         </Link>
+          <Link to="/">
+            <div
+              onClick={() => handleClick(c.categoryId)}
+              key={i}
+              className="w-full h-[5vh] md:h-[7vh] rounded-md hover:bg-slate-200 my-2 flex gap-1 md:gap-4 items-center pl-2"
+            >
+              <i class={`${c.icon} text-sm md:text-xl`}></i>
+              <h3 className=" text-xs md:text-lg font-thin">{c.name}</h3>
+            </div>
+          </Link>
         );
       })}
     </div>

@@ -31,10 +31,10 @@ const Comment = ({ detail,commentId }) => {
       />
       <div>
         <h3 className="flex gap-2">
-          <p className="font-bold">{authorDisplayName}</p>
+          <p className="font-bold text-sm lg:text-lg">{authorDisplayName}</p>
           <span>2 days ago</span>
         </h3>
-        <p>
+        <p className="text-xs lg:text-sm">
           {textDisplay}
         </p>
         <span>{formatToKOrMillion(Number(likeCount))} <i class="ri-thumb-up-fill"></i></span>

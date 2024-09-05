@@ -77,7 +77,7 @@ const VideoCardContainer = () => {
     <div
       ref={containerRef}
       className={`${
-        menu ? "w-[100vw] md:w-[85vw]" : " w-[84vw] md:w-[95vw]"
+        menu ? "w-[100vw] md:w-[85vw]" : " w-[100vw] md:w-[95vw]"
       } h-[90vh] overflow-y-auto flex justify-center gap-3 flex-wrap p-3`}
     >
       {videos.map((v) => (

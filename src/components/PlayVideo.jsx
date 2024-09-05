@@ -38,7 +38,7 @@ const PlayVideo = ({ detail }) => {
 ></iframe>
 {/* detail section */}
 <div className="mt-3">
-    <h1 className="font-bold text-xl">
+    <h1 className="font-bold text-md lg:text-xl">
       {title}
     </h1>
     <div className="flex mt-3 justify-between items-center">
