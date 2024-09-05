@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import useVideoData from "../hooks/useVideoData";
 import PlayVideo from "./PlayVideo";
 import useComment from "../hooks/useComment";
@@ -8,11 +8,13 @@ import { setComments } from "../utils/commentsSlice";
 import { setPageToken } from "../utils/commentTokenSlice";
 import { comment_api } from "../utils/api";
 import Comment from "./Comment";
-import { sideBarClose, sideBarToggler } from "../utils/toggleSlice";
+import { sideBarClose } from "../utils/toggleSlice";
+import ChatBox from "./ChatBox";
+import Suggetion from "./Suggetion";
 
 const Watch = () => {
-  const [urlSearchParam] = useSearchParams();
-  const videoId = urlSearchParam.get("v");
+  const {videoId}=useParams()
+  
   const dispatch = useDispatch();
   const [load, setLoad] = useState(false);
 
@@ -21,16 +23,19 @@ const Watch = () => {
   const { comments } = useSelector((store) => store.comments);
   const reference = useRef(null);
   const videoDetails = useVideoData(videoId);
+  console.log("useVideo details",videoDetails)
   const commentsData = useComment(videoId);
   const [commentShow, setCommentShow] = useState(false);
+  const [categoryId,setCategoryId] = useState('');
 
   // video iframe details
   useEffect(() => {
     if (videoDetails) {
       setVideoDetail(videoDetails);
+      setCategoryId(videoDetails.items[0].snippet.categoryId);
       dispatch(sideBarClose(false));
     }
-  }, [videoDetails]);
+  }, [videoDetails,videoId]);
 
   // comment initial detail handle
   useEffect(() => {
@@ -92,17 +97,21 @@ const Watch = () => {
   return (
     <div
       ref={reference}
-      className="w-[100vw] h-[90vh] overflow-y-auto md:flex  overflow-x-hidden"
+      className="w-[100vw] h-[90vh] overflow-y-auto lg:flex  overflow-x-hidden"
     >
       {/* playVideo and comment */}
-      <div className="w-full md:w-[65%] p-3 md:pl-6">
+      <div className="w-full lg:w-[65%] p-3 md:pl-6">
         <PlayVideo detail={videoDetail} />
         <hr className="mt-2 h-4 shadow-xl" />
         {/* comment section */}
-        <div className={`w-full ${commentShow?"block":"hidden"} md:block relative`}>
+        <div
+          className={`w-full ${
+            commentShow ? "block" : "hidden"
+          } lg:block relative`}
+        >
           <span
             onClick={() => setCommentShow(false)}
-            className="absolute top-1 right-1  md:hidden"
+            className="absolute top-1 right-1  lg:hidden"
           >
             <i className="ri-close-line"></i>
           </span>
@@ -119,14 +128,26 @@ const Watch = () => {
             })}
           {load && <div>Loading....</div>}
         </div>
-        {/* dummy comment */}
-        <div onClick={()=>setCommentShow(true)} className={`w-[50%] mx-auto text-center rounded-lg bg-sky-200 ${commentShow?"hidden":"block"} md:hidden`}>
+        {/* see comments btn */}
+        <div
+          onClick={() => setCommentShow(true)}
+          className={`w-[50%] mx-auto text-center rounded-lg bg-sky-200 mt-4 ${
+            commentShow ? "hidden" : "block"
+          } lg:hidden`} // Ensure this only hides the button for larger screens
+        >
           See comments
         </div>
       </div>
 
       {/* live chat and suggetions */}
-      <div className="w-[35%] bg-green-400">live chat</div>
+      <div className="w-full lg:w-[35%]   px-2">
+        {/* live chat */}
+        <h1 className="text-center">Live chat</h1>
+        <ChatBox />
+        <hr className="mt-3 h-[1px] bg-slate-300" />
+        {/* suggetions */}
+        <Suggetion categoryId={categoryId} videoId={videoId}/>
+      </div>
     </div>
   );
 };

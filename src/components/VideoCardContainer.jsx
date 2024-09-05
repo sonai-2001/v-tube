@@ -81,8 +81,8 @@ const VideoCardContainer = () => {
       } h-[90vh] overflow-y-auto flex justify-center gap-3 flex-wrap p-3`}
     >
       {videos.map((v) => (
-        <Link to={`/watch?v=${v.id}`} key={v.id}>
-          <Vcard details={v} />
+        <Link to={`/watch/${v.id}`} key={v.id}>
+          <Vcard details={v} sug={false} />
         </Link>
       ))}
     </div>

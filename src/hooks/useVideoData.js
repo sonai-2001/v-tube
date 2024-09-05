@@ -5,7 +5,7 @@ const useVideoData=(videoId)=>{
   const [details,setDetails]=useState(null)
    useEffect(()=>{
         getDetails();
-   },[])
+   },[videoId])
 
    const getDetails=async()=>{
        const api=SINGLE_VIDEO_API+videoId;

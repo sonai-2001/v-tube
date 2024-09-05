@@ -12,7 +12,7 @@ const router=createBrowserRouter([
                 element:<VideoCardContainer/>
             },
             {
-                path:"/watch",
+                path:"/watch/:videoId",
                 element:<Watch/>
             }
         ]

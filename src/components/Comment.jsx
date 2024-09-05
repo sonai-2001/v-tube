@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { formatToKOrMillion } from "../helper/functions";
 import useReplies from "../hooks/useReplies";
+import formatDateAndAgo from "../helper/FormatDayAgo";
 
 const Comment = ({ detail,commentId }) => {
   console.log(detail);
@@ -32,7 +33,7 @@ const Comment = ({ detail,commentId }) => {
       <div>
         <h3 className="flex gap-2">
           <p className="font-bold text-sm lg:text-lg">{authorDisplayName}</p>
-          <span>2 days ago</span>
+          <span>{formatDateAndAgo(publishedAt)}</span>
         </h3>
         <p className="text-xs lg:text-sm">
           {textDisplay}

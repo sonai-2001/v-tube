@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { VIDEO_API } from "../utils/api";
 
-const useVideos = () => {
+const useVideos = (categoryNo=null) => {
   const { category } = useSelector((store) => store.category);
   const [videos, setVideos] = useState(null);
   const [pageToken, setPageToken] = useState(null);
@@ -12,7 +12,7 @@ const useVideos = () => {
   }, [category]);
 
   const getVideos = async () => {
-    const categoryId = category === "" ? "" : `&videoCategoryId=${category}`;
+    const categoryId = categoryNo===null?category === "" ? "" : `&videoCategoryId=${category}`:`&videoCategoryId=${categoryNo}`;
     const apiUrl = `${VIDEO_API}${categoryId}`;
 
     const response = await fetch(apiUrl);
