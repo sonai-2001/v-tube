@@ -4,7 +4,7 @@ import formatDateAndAgo from "../helper/FormatDayAgo";
 import { formatToKOrMillion } from "../helper/functions";
 
 const Vcard = ({ details,sug }) => {
-  const { url } = details.snippet.thumbnails.standard;
+  const { url } = details.snippet.thumbnails.medium;
   const { channelTitle, title, publishedAt } = details.snippet;
   const { viewCount } = details.statistics;
 
