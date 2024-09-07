@@ -4,8 +4,7 @@ import getRandomLiveChatMessage from "../helper/randomChat";
 import getRandomName from "../helper/randomName";
 import formatTime from "../helper/formatTime";
 
-const ChatBox = () => {
-  const [messages, setMessages] = useState([]);
+const ChatBox = ({messages,setMessages}) => {
   const [myChat, setMyChat] = useState("");
 
   useEffect(() => {

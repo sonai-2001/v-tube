@@ -4,6 +4,7 @@ import Vcard from "./Vcard";
 import { Link } from "react-router-dom";
 
 const Suggetion = ({ categoryId, videoId }) => {
+  console.log(categoryId)
   const suggetionsData = useVideos(categoryId);
   const [sug, setSug] = useState(null);
   useEffect(() => {

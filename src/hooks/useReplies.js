@@ -9,7 +9,6 @@ const useReplies=(commentId)=>{
     const getReplies=async()=>{
      const raw=await fetch(replies_api+commentId);
      const data=await raw.json();
-     console.log(data);
      setReplies(data.items); // Assuming the API response contains 'items' property with the replies
      
     }

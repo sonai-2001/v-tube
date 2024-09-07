@@ -28,7 +28,6 @@ const useComment=(videoId)=>{
     }
   };
   
-   console.log(data)
     return data;
 }
 export default useComment

@@ -4,7 +4,6 @@ import useReplies from "../hooks/useReplies";
 import formatDateAndAgo from "../helper/FormatDayAgo";
 
 const Comment = ({ detail,commentId }) => {
-  console.log(detail);
   const [reply,setreply]=useState(null)
   
   const {

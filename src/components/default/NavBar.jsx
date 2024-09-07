@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { sideBarToggler } from "../../utils/toggleSlice";
 import { Link, useNavigate } from "react-router-dom";
-import { SUGGETION_API, video_logo } from "../../utils/api";
+import { SUGGETION_API, user_profile, video_logo } from "../../utils/api";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -131,7 +131,7 @@ const NavBar = () => {
 
       {/* User profile part */}
       <div>
-        <img className="h-[30px] w-[30px]" src="user.png" alt="User" />
+        <img className="h-[30px] w-[30px]" src={user_profile} alt="User" />
       </div>
     </div>
   );

@@ -14,6 +14,9 @@ import Suggetion from "./Suggetion";
 
 const Watch = () => {
   const {videoId}=useParams()
+  const [messages, setMessages] = useState([]);
+
+  console.log(videoId)
   
   const dispatch = useDispatch();
   const [load, setLoad] = useState(false);
@@ -34,6 +37,10 @@ const Watch = () => {
       setVideoDetail(videoDetails);
       setCategoryId(videoDetails.items[0].snippet.categoryId);
       dispatch(sideBarClose(false));
+      if (reference.current) {
+        reference.current.scrollTop = 0; // Reset scroll position to top
+      }
+
     }
   }, [videoDetails,videoId]);
 
@@ -43,6 +50,7 @@ const Watch = () => {
       console.log("comments data", commentsData.items);
       dispatch(setComments(commentsData.items));
       dispatch(setPageToken(commentsData.nextPageToken));
+      setMessages([])
     }
   }, [commentsData]);
 
@@ -143,7 +151,7 @@ const Watch = () => {
       <div className="w-full lg:w-[35%]   px-2">
         {/* live chat */}
         <h1 className="text-center">Live chat</h1>
-        <ChatBox />
+        <ChatBox messages={messages} setMessages={setMessages} />
         <hr className="mt-3 h-[1px] bg-slate-300" />
         {/* suggetions */}
         <Suggetion categoryId={categoryId} videoId={videoId}/>
