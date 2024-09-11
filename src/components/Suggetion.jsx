@@ -18,13 +18,13 @@ const Suggetion = ({ categoryId, videoId }) => {
   }, [suggetionsData.items,videoId]);
 
   if (sug === null) {
-    return <div>Loading...</div>;
+    return <div>No suggetions available..</div>;
   }
   return (
     <div className="w-full py-2 px-1">
       <h1 className="text-center">Related Videos</h1>
       <div className="mt-2">
-        {sug.map((v, i) => {
+        { sug && sug.map((v, i) => {
           return (
             <Link to={`/watch/${v.id}`} key={v.id}>
               <Vcard details={v} sug={true} />

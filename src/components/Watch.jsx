@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useVideoData from "../hooks/useVideoData";
 import PlayVideo from "./PlayVideo";
 import useComment from "../hooks/useComment";
@@ -11,68 +11,54 @@ import Comment from "./Comment";
 import { sideBarClose } from "../utils/toggleSlice";
 import ChatBox from "./ChatBox";
 import Suggetion from "./Suggetion";
+import ServerDown from "./ServerDown";
 
 const Watch = () => {
-  const {videoId}=useParams()
+  const { videoId } = useParams();
   const [messages, setMessages] = useState([]);
-
-  console.log(videoId)
-  
   const dispatch = useDispatch();
   const [load, setLoad] = useState(false);
-
   const [videoDetail, setVideoDetail] = useState(null);
   const { token } = useSelector((store) => store.token);
   const { comments } = useSelector((store) => store.comments);
   const reference = useRef(null);
   const videoDetails = useVideoData(videoId);
-  console.log("useVideo details",videoDetails)
   const commentsData = useComment(videoId);
   const [commentShow, setCommentShow] = useState(false);
-  const [categoryId,setCategoryId] = useState('');
+  const [categoryId, setCategoryId] = useState("");
 
-  // video iframe details
+  // Ensure videoDetails is available before accessing its properties
   useEffect(() => {
-    if (videoDetails) {
+    if (videoDetails && videoDetails.items && videoDetails.items.length > 0) {
       setVideoDetail(videoDetails);
-      setCategoryId(videoDetails.items[0].snippet.categoryId);
+      setCategoryId(videoDetails.items[0]?.snippet?.categoryId || "");
       dispatch(sideBarClose(false));
       if (reference.current) {
         reference.current.scrollTop = 0; // Reset scroll position to top
       }
-
     }
-  }, [videoDetails,videoId]);
+  }, [videoDetails, videoId, dispatch]);
 
   // comment initial detail handle
   useEffect(() => {
     if (commentsData) {
-      console.log("comments data", commentsData.items);
       dispatch(setComments(commentsData.items));
       dispatch(setPageToken(commentsData.nextPageToken));
-      setMessages([])
+      setMessages([]);
     }
-  }, [commentsData]);
+  }, [commentsData, dispatch]);
 
   // scroll event initial handle
   useEffect(() => {
-    console.log("scroll effect called");
     const container = reference.current;
 
-    //scroll handler
     const handleScroll = () => {
-      console.log("handleScrollded called");
-      console.log("container.scrollTop", container.scrollTop);
-      console.log("container.clientHeight", container.clientHeight);
-      console.log("container.scrollHeight", container.scrollHeight);
-      if (
-        container.scrollTop + container.clientHeight >=
-        container.scrollHeight - 50
-      ) {
+      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 50) {
         // fetch more comments
         fetchMoreComments();
       }
     };
+
     if (container) {
       container.addEventListener("scroll", handleScroll);
     }
@@ -99,41 +85,25 @@ const Watch = () => {
     setLoad(false);
   };
 
-  if (videoDetail === null) {
-    return;
+  if (!videoDetail) {
+    return <ServerDown/>; // Provide a fallback in case videoDetail is still null
   }
+
   return (
-    <div
-      ref={reference}
-      className="w-[100vw] h-[90vh] overflow-y-auto lg:flex  overflow-x-hidden"
-    >
+    <div ref={reference} className="w-[100vw] h-[90vh] overflow-y-auto lg:flex  overflow-x-hidden">
       {/* playVideo and comment */}
       <div className="w-full lg:w-[65%] p-3 md:pl-6">
         <PlayVideo detail={videoDetail} />
         <hr className="mt-2 h-4 shadow-xl" />
         {/* comment section */}
-        <div
-          className={`w-full ${
-            commentShow ? "block" : "hidden"
-          } lg:block relative`}
-        >
-          <span
-            onClick={() => setCommentShow(false)}
-            className="absolute top-1 right-1  lg:hidden"
-          >
+        <div className={`w-full ${commentShow ? "block" : "hidden"} lg:block relative`}>
+          <span onClick={() => setCommentShow(false)} className="absolute top-1 right-1 lg:hidden">
             <i className="ri-close-line"></i>
           </span>
           <h2 className="font-bold text-xl">Comments</h2>
-          {comments &&
-            comments.map((c, i) => {
-              return (
-                <Comment
-                  key={c.id}
-                  detail={c.snippet.topLevelComment.snippet}
-                  commentId={c.id}
-                />
-              );
-            })}
+          {comments && comments.map((c) => (
+            <Comment key={c.id} detail={c.snippet.topLevelComment.snippet} commentId={c.id} />
+          ))}
           {load && <div>Loading....</div>}
         </div>
         {/* see comments btn */}
@@ -147,14 +117,14 @@ const Watch = () => {
         </div>
       </div>
 
-      {/* live chat and suggetions */}
-      <div className="w-full lg:w-[35%]   px-2">
+      {/* live chat and suggestions */}
+      <div className="w-full lg:w-[35%] px-2">
         {/* live chat */}
         <h1 className="text-center">Live chat</h1>
         <ChatBox messages={messages} setMessages={setMessages} />
         <hr className="mt-3 h-[1px] bg-slate-300" />
-        {/* suggetions */}
-        <Suggetion categoryId={categoryId} videoId={videoId}/>
+        {/* suggestions */}
+        <Suggetion categoryId={categoryId} videoId={videoId} />
       </div>
     </div>
   );

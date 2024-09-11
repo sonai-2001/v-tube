@@ -10,10 +10,14 @@ const useChannel=(id)=>{
      const getDetail=async()=>{
         //make a request to the channel api
         //set the response to the detail state
+       try {
         const raw=await fetch(CHANNEL_API+id);
         const data=await raw.json();
         console.log(data.items[0])
         setDetail(data.items[0])
+       } catch (error) {
+        console.log(error)
+       }
      }
     return detail
 }

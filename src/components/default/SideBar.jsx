@@ -33,7 +33,7 @@ const SideBar = () => {
   if (!menu) {
     return (
       <div
-        className={`bg-white h-[90vh] w-[16vw] md:w-[5vw] shadow-2xl pt-1 md:py-2 pl-2 md:px-1 border-r md:border-r-0 ${
+        className={`bg-white h-[90vh] w-[17vw] md:w-[5vw] shadow-2xl pt-1 md:py-2 pl-2 md:px-1 border-r md:border-r-0 ${
           pathname.includes("watch") ? "hidden" : "md:flex"
         } flex-col gap-5 md:gap-0 border-slate-300`}
       >
@@ -41,10 +41,10 @@ const SideBar = () => {
           <Link key={i} to="/">
             <div
               onClick={() => handleClick(c.categoryId)}
-              className="w-full h-[5vh] md:h-[7vh] rounded-md hover:bg-slate-200 md:mb-2 flex flex-col items-center pb-1 cursor-pointer"
+              className="w-full h-[5vh] md:h-[7vh] rounded-md hover:bg-slate-200 mb-5 md:mb-2 flex flex-col items-center pb-1 cursor-pointer"
             >
               <i className={`${c.icon} text-sm md:text-xl`}></i>
-              <h3 className="text-xs font-thin text-center">{c.name}</h3>
+              <h3 className=" text-[9px] md:text-[10px] font-thin text-center">{c.name}</h3>
             </div>
           </Link>
         ))}

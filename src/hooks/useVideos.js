@@ -12,7 +12,8 @@ const useVideos = (categoryNo=null) => {
   }, [category]);
 
   const getVideos = async () => {
-    const categoryId = categoryNo===null?category === "" ? "" : `&videoCategoryId=${category}`:`&videoCategoryId=${categoryNo}`;
+    try {
+      const categoryId = categoryNo===null?category === "" ? "" : `&videoCategoryId=${category}`:`&videoCategoryId=${categoryNo}`;
     const apiUrl = `${VIDEO_API}${categoryId}`;
 
     const response = await fetch(apiUrl);
@@ -21,6 +22,9 @@ const useVideos = (categoryNo=null) => {
     setVideos(data.items);
     setPageToken(data.nextPageToken);
     console.log("Fetched videos:", data.items);
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return { pageToken, items: videos };

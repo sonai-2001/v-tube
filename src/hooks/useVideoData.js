@@ -8,11 +8,15 @@ const useVideoData=(videoId)=>{
    },[videoId])
 
    const getDetails=async()=>{
-       const api=SINGLE_VIDEO_API+videoId;
-       const raw= await fetch(api);
-       const data=await raw.json();
-       console.log(data);
-       setDetails(data);
+      try {
+        const api=SINGLE_VIDEO_API+videoId;
+        const raw= await fetch(api);
+        const data=await raw.json();
+        console.log(data);
+        setDetails(data);
+      } catch (error) {
+        console.log(error)
+      }
    }
    
     return details;

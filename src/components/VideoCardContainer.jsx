@@ -4,6 +4,7 @@ import Vcard from "./Vcard";
 import useVideos from "../hooks/useVideos";
 import { VIDEO_API } from "../utils/api";
 import { Link } from "react-router-dom";
+import ServerDown from "./ServerDown";
 //o
 const VideoCardContainer = () => {
   const menu = useSelector((store) => store.toggle.isMenuOpen);
@@ -70,7 +71,7 @@ const VideoCardContainer = () => {
   };
 
   if (videos.length === 0) {
-    return <h2>Loading...</h2>;
+    return  <ServerDown/>;
   }
 
   return (

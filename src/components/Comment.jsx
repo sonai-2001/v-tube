@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { formatToKOrMillion } from "../helper/functions";
 import useReplies from "../hooks/useReplies";
 import formatDateAndAgo from "../helper/FormatDayAgo";
+import { notImage } from "../utils/api";
 
 const Comment = ({ detail,commentId }) => {
   const [reply,setreply]=useState(null)
@@ -26,12 +27,12 @@ const Comment = ({ detail,commentId }) => {
    <div className="flex w-full mb-2 items-center gap-3">
       <img
         className="w-[45px] h-[45px] rounded-full object-cover border"
-        src={authorProfileImageUrl}
+        src={authorProfileImageUrl || notImage}
         alt="profile"
       />
       <div>
         <h3 className="flex gap-2">
-          <p className="font-bold text-sm lg:text-lg">{authorDisplayName}</p>
+          <p className="font-bold text-sm lg:text-lg">{authorDisplayName }</p>
           <span>{formatDateAndAgo(publishedAt)}</span>
         </h3>
         <p className="text-xs lg:text-sm">
