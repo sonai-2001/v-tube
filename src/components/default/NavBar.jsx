@@ -47,7 +47,7 @@ const NavBar = () => {
 
   const getData = async () => {
     console.log("Fetching new data...");
-    const raw = await fetch(SUGGETION_API + search);
+    const raw = await fetch(`${SUGGETION_API}${encodeURIComponent(search)}`);
     const data = await raw.json();
     console.log(data[1]);
 
