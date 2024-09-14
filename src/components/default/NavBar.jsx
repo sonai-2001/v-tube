@@ -1,4 +1,3 @@
-//demo
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { sideBarToggler } from "../../utils/toggleSlice";
@@ -47,7 +46,7 @@ const NavBar = () => {
 
   const getData = async () => {
     console.log("Fetching new data...");
-    const raw = await fetch(`${SUGGETION_API}${encodeURIComponent(search)}`);
+    const raw = await fetch(SUGGETION_API + search);
     const data = await raw.json();
     console.log(data[1]);
 
