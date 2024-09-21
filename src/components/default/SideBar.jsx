@@ -35,7 +35,7 @@ const SideBar = () => {
       <div
         className={`bg-white h-[90vh] w-[17vw] md:w-[5vw] shadow-2xl pt-1 md:py-2 pl-2 md:px-1 border-r md:border-r-0 ${
           pathname.includes("watch") ? "hidden" : "md:flex"
-        } flex-col gap-5 md:gap-0 border-slate-300`}
+        } flex-col hidden md:block gap-5 md:gap-0 border-slate-300`}
       >
         {categories.map((c, i) => (
           <Link key={i} to="/">
@@ -44,7 +44,9 @@ const SideBar = () => {
               className="w-full h-[5vh] md:h-[7vh] rounded-md hover:bg-slate-200 mb-5 md:mb-2 flex flex-col items-center pb-1 cursor-pointer"
             >
               <i className={`${c.icon} text-sm md:text-xl`}></i>
-              <h3 className=" text-[9px] md:text-[10px] font-thin text-center">{c.name}</h3>
+              <h3 className=" text-[9px] md:text-[10px] font-thin text-center">
+                {c.name}
+              </h3>
             </div>
           </Link>
         ))}
@@ -57,7 +59,7 @@ const SideBar = () => {
     <div
       className={`bg-white h-[90vh] w-[28vw] md:w-[15vw] shadow-2xl pt-1 md:py-2 px-1 ${
         pathname.includes("watch") ? "absolute z-10" : "static"
-      }`}
+      } absolute md:static`}
     >
       {categories.map((c, i) => (
         <Link key={i} to="/">

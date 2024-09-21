@@ -31,7 +31,7 @@ const NavBar = () => {
       // Set a new timer to debounce the API call
       const newTimeout = setTimeout(() => {
         getData();
-      }, 500);
+      }, 200);
 
       setDebounceTimeout(newTimeout);
     }
