@@ -39,7 +39,7 @@ const ChatBox = ({messages,setMessages}) => {
     } else {
       setMessages((prevMessages) => {
         const Message = {
-          name: "Apurba",
+          name: "You",
           message: myChat,
           timestamp: new Date(),
           mine: true,
